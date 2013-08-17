@@ -1,3 +1,4 @@
+#!/usr/bin/ruby
 require 'rubygems'
 require 'nokogiri'
 require 'open-uri'
@@ -12,6 +13,8 @@ doc.css('h2 + ul > li').each {|e| facts << e }
 
 # print facts.length
 
-f = facts.sample
-factType = f.parent.previous.previous.child.content
-print factType + "\n\t" + f.content + "\n\n" 
+10.times do 
+  f = facts.sample
+  factType = f.parent.previous.previous.child.content
+  print factType + "\n\t" + f.content + "\n\n" 
+end

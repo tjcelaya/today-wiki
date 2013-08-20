@@ -3,18 +3,29 @@ require 'rubygems'
 require 'nokogiri'
 require 'open-uri'
 
-doc = Nokogiri::HTML(open('http://en.wikipedia.org/wiki/' + DateTime.now.strftime('%B %e').gsub(' ','_')))
+doc = Nokogiri::HTML(open('http://en.wikipedia.org/wiki/' + DateTime.now.strftime('%B_%e')))
 
-facts = []
-fact = ''
-f = nil
+sortedFacts = {}
 
-doc.css('h2 + ul > li').each {|e| facts << e }
+# puts doc.css('h2 + ul > li').to_a[1].class == Node::XMLElement
 
-# print facts.length
+allLI = doc.css('h2 + ul > li').to_a
 
-10.times do 
-  f = facts.sample
+# puts allLI.size
+
+allLI.shuffle.take(10).each { |f|
   factType = f.parent.previous.previous.child.content
-  print factType + "\n\t" + f.content + "\n\n" 
-end
+  if sortedFacts[:"#{factType}"].is_a? Array
+  	sortedFacts[:"#{factType}"] << f.content
+  else
+  	sortedFacts[:"#{factType}"] = []
+  end
+}
+
+sortedFacts.keys.each { |k|
+	# puts "#{sortedFacts[:"#{k}"].class} - #{k}"
+	puts "#{k}\n=========="
+	sortedFacts[:"#{k}"].each { |f| 
+		puts "\t"+f
+	}
+}

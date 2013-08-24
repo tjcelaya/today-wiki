@@ -20,9 +20,7 @@ allLI.each { |f|
 }
 
 sortedFacts.keys.each { |k|
-	# puts "#{sortedFacts[:"#{k}"].class} - #{k}"
-	puts "#{k}\n=========="
-	sortedFacts["#{k}"].each { |f| 
-		puts "\t"+f
-	}
+  sortedFacts["#{k}"].each { |f| 
+    puts "\t"+f
+  }
 }
